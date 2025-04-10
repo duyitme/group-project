@@ -29,8 +29,8 @@ public class SimpleCalculator extends JFrame {
         setSize(300, 400);
         setLocationRelativeTo(null);
     }
-    
- // Thêm nút số
+
+    // Thêm nút số
     public void addNumberButtons(JPanel panel) {
         ActionListener numberListener = e -> {
             String digit = e.getActionCommand();
@@ -47,20 +47,19 @@ public class SimpleCalculator extends JFrame {
             button.addActionListener(numberListener);
             panel.add(button);
         }
-        
     }
- // Thêm nút phép toán và nút xóa
+
+    // Thêm nút phép toán và nút xóa
     public void addOperationButtons(JPanel panel) {
         ActionListener commandListener = e -> {
             String command = e.getActionCommand();
 
             // Xử lý nút xóa (C)
             if (command.equals("C")) {
-                // Giả sử các biến result, lastCommand, start đã được định nghĩa
-                // Reset mọi thứ về giá trị ban đầu
-                display.setText("0");
-                start = true;
+                result = 0;
                 lastCommand = "=";
+                start = true;
+                display.setText("0");
                 return;
             }
 
@@ -72,7 +71,6 @@ public class SimpleCalculator extends JFrame {
                     lastCommand = command;
                 }
             } else {
-                // Gọi calculate từ Thành viên 3
                 calculate(Double.parseDouble(display.getText()));
                 lastCommand = command;
                 start = true;
@@ -86,6 +84,8 @@ public class SimpleCalculator extends JFrame {
             panel.add(button);
         }
     }
+
+    // Logic tính toán
     public void calculate(double x) {
         switch (lastCommand) {
             case "+":
@@ -108,14 +108,12 @@ public class SimpleCalculator extends JFrame {
         display.setText("" + result);
     }
 
-    
-   
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SimpleCalculator calc = new SimpleCalculator();
             JPanel buttonPanel = (JPanel) calc.getContentPane().getComponent(1);
-            calc.addNumberButtons(buttonPanel); // Gọi hàm thêm nút số
-            calc.addOperationButtons(buttonPanel);
+            calc.addNumberButtons(buttonPanel);    // Gọi hàm thêm nút số
+            calc.addOperationButtons(buttonPanel); // Gọi hàm thêm nút phép toán
             calc.setVisible(true);
         });
     }
